@@ -1,5 +1,3 @@
-import { A } from "@solidjs/router";
-
 function Footer() {
     return (
         <footer className="bg-zinc-300 py-8 w-full relative">
@@ -10,10 +8,10 @@ function Footer() {
                             <div className="font-bold">PRODUCTS</div>
                         </li>
                         <li>
-                            <A href="/contact us" className="hover:underline">Inquire Now</A>
+                            <a href="/contact us" className="hover:underline">Inquire Now</a>
                         </li>
                         <li>
-                            <A href="/products" className="hover:underline">View Products</A>
+                            <a href="/products" className="hover:underline">View Products</a>
                         </li>
                     </ul>
 
@@ -22,10 +20,10 @@ function Footer() {
                             <div className="font-bold">OUR HISTORY</div>
                         </li>
                         <li>
-                            <A href="/about us" className="hover:underline">Background</A>
+                            <a href="/about us" className="hover:underline">Background</a>
                         </li>
                         <li>
-                            <A href="/about us" className="hover:underline">Manufacturing</A>
+                            <a href="/about us" className="hover:underline">Manufacturing</a>
                         </li>
                     </ul>
                     
@@ -34,10 +32,10 @@ function Footer() {
                             <div className="font-bold">CUSTOMER SERVICE</div>
                         </li>
                         <li>
-                            <A href="/contact us" className="hover:underline">Call Us</A>
+                            <a href="/contact us" className="hover:underline">Call Us</a>
                         </li>
                         <li>
-                            <A href="/faqs" className="hover:underline">FAQs</A>
+                            <a href="/faqs" className="hover:underline">FaQs</a>
                         </li>
                     </ul>
                     
@@ -46,10 +44,10 @@ function Footer() {
                             <div className="font-bold">TERMS OF USE</div>
                         </li>
                         <li>
-                            <A href="/privacy-policy" className="hover:underline">Privacy Policy</A>
+                            <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
                         </li>
                         <li>
-                            <A href="/cookie-policy" className="hover:underline">Cookie Policy</A>
+                            <a href="/cookie-policy" className="hover:underline">Cookie Policy</a>
                         </li>
                     </ul>
                 </div>
