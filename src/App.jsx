@@ -13,6 +13,8 @@ function App() {
     setGreet(response.data);
   });
 
+  apiClient.post("/hello");
+
   return <h1>{greet()}</h1>;
 }
 
