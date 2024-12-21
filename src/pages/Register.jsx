@@ -66,33 +66,35 @@ export default function Register() {
     if (!confirmPasswordError()) {
       console.log("Should reach if password match");
       try {
-        await schema.validate(formData, { abortEarly: false });
 
-        const response = fetch("/submit-register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }).then((response) => {
-          if (response.ok) {
-            console.log("Form data submitted successfully");
-            console.log(formData);
-            setFirstName("");
-            setLastName("");
-            setEmail("");
-            setMobileNumber("");
-            setPassword("");
-            setConfirmPassword("");
-          } else {
-            console.error("Failed to submit form data");
-            throw new Error("Failed to register account");
-          }
-        });
-
-        toast.promise(response, {
-          loading: "Registering your account",
-          success: "You're in! Verify account via your email now",
-          error: "Error occurred while registering your account",
-        });
+          apiClient.post("/hello", formData);
+//        await schema.validate(formData, { abortEarly: false });
+//
+//        const response = fetch("/submit-register", {
+//          method: "POST",
+//          headers: { "Content-Type": "application/json" },
+//          body: JSON.stringify(formData),
+//        }).then((response) => {
+//          if (response.ok) {
+//            console.log("Form data submitted successfully");
+//            console.log(formData);
+//            setFirstName("");
+//            setLastName("");
+//            setEmail("");
+//            setMobileNumber("");
+//            setPassword("");
+//            setConfirmPassword("");
+//          } else {
+//            console.error("Failed to submit form data");
+//            throw new Error("Failed to register account");
+//          }
+//        });
+//
+//        toast.promise(response, {
+//          loading: "Registering your account",
+//          success: "You're in! Verify account via your email now",
+//          error: "Error occurred while registering your account",
+//        });
       } catch (err) {
         if (err instanceof yup.ValidationError) {
           const errorMessages = {};
