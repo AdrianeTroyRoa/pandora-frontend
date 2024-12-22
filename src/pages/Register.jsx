@@ -1,38 +1,43 @@
 import apiClient from "../apiClient";
 import king8 from "../assets/king8-logo.png";
 import { createSignal } from "solid-js";
-//import * as yup from "yup";
+import * as yup from "yup";
 //import zxcvbn from "zxcvbn"; //for password strength checker
 
-//const schema = yup.object().shape({
-//  first_name: yup
-//    .string()
-//    .min(2, "First Name needs to be at least 2 characters")
-//    .max(50, "First Name only allows up to 50 characters")
-//    .required("First Name is required"),
-//  last_name: yup
-//    .string()
-//    .min(2, "Last Name needs to be at least 2 characters")
-//    .max(50, "Last Name only allows up to 50 characters")
-//    .required("Last Name is required"),
-//  email: yup
-//    .string()
-//    .email("Invalid email")
-//    .matches(
-//      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-//      "Invalid email format",
-//    )
-//    .required("Email is required"),
-//  mobile_number: yup
-//    .string()
-//    .min(10, "Philippine Mobile Number is required to be 10 characters")
-//    .max(10, "Philippine Mobile Number is required to be 10 characters"),
-//  password: yup
-//    .string()
-//    .min(8, "Password needs to be at least 8 characters")
-//    .max(40, "Password should be utmost 40 characters only")
-//    .required("Password is required"),
-//});
+const schema = yup.object().shape({
+  first_name: yup
+    .string()
+    .min(2, "First Name needs to be at least 2 characters")
+    .max(50, "First Name only allows up to 50 characters")
+    .required("First Name is required")
+    .trim(),
+  last_name: yup
+    .string()
+    .min(2, "Last Name needs to be at least 2 characters")
+    .max(50, "Last Name only allows up to 50 characters")
+    .required("Last Name is required")
+    .trim(),
+  email: yup
+    .string()
+    .email("Invalid email")
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Invalid email format",
+    )
+    .required("Email is required"),
+  mobile_number: yup
+    .string()
+    .nullable()
+    .notRequired()
+    .min(10, "Philippine Mobile Number should be 10 characters")
+    .max(10, "Philippine Mobile Number should be 10 characters")
+    .matches(/^9?[0-9]*$/, "Must be digits and should start with 9"),
+  password: yup
+    .string()
+    .min(8, "Password needs to be at least 8 characters")
+    .max(40, "Password should be utmost 40 characters only")
+    .required("Password is required"),
+});
 
 export default function Register() {
   console.log("Hello");
@@ -44,6 +49,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = createSignal("");
   const [confirmPasswordMatch, setConfirmPasswordMatch] = createSignal(false);
   const [showPassword, setShowPassword] = createSignal(false);
+  const [errors, setErrors] = createSignal({});
 
   const handleSubmit = async (e) => {
     console.log("Reached submit function");
@@ -56,10 +62,25 @@ export default function Register() {
       password: password(),
     };
 
+    schema
+      .validate(formData, { abortEarly: false })
+      .then(() => {
+        setErrors({});
+        console.log("Form submitted successfully:", formValues());
+      })
+      .catch((err) => {
+        const newErrors = {};
+        //console.warn(err.inner);
+        err.inner.forEach((error) => {
+          newErrors[error.path] = error.message;
+        });
+        setErrors(newErrors);
+      });
+
     if (confirmPasswordMatch()) {
       console.log("Password match. Should send data to server");
       apiClient.post("hello", formData).catch((err) => {
-        console.warn("there is an error", err);
+        console.error("there is an error", err);
       });
     } else {
       console.log("Password don't match!");
@@ -100,6 +121,11 @@ export default function Register() {
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
+                {errors().first_name && (
+                  <div className="text-center italic text-red-900">
+                    {errors().first_name}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -119,6 +145,11 @@ export default function Register() {
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
+                {errors().last_name && (
+                  <div className="text-center italic text-red-900">
+                    {errors().last_name}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -139,6 +170,11 @@ export default function Register() {
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
+                {errors().email && (
+                  <div className="text-center italic text-red-900">
+                    {errors().email}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -157,10 +193,14 @@ export default function Register() {
                   onInput={(e) => setMobileNumber(e.target.value)}
                   maxlength="10"
                   type="tel"
-                  required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors().mobile_number && (
+                <div className="text-center italic text-red-900">
+                  {errors().mobile_number}
+                </div>
+              )}
             </div>
 
             <div>
@@ -227,6 +267,11 @@ export default function Register() {
                   )}
                 </button>
               </div>
+              {errors().password && (
+                <div className="text-center italic text-red-900">
+                  {errors().password}
+                </div>
+              )}
             </div>
 
             <div>
