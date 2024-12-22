@@ -18,7 +18,7 @@ function App() {
   //  response: "Ok",
   //});
 
-  return <Register></Register>;
+  return <Login />;
 }
 
 export default App;

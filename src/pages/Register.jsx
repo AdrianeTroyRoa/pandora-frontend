@@ -44,7 +44,6 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = createSignal("");
   const [confirmPasswordMatch, setConfirmPasswordMatch] = createSignal(false);
   const [showPassword, setShowPassword] = createSignal(false);
-  const [allowTogglePWMatch, setAllowTogglePWMatch] = createSignal(false);
 
   const handleSubmit = async (e) => {
     console.log("Reached submit function");
@@ -177,7 +176,10 @@ export default function Register() {
                 <input
                   id="password"
                   value={password()}
-                  onInput={(e) => setPassword(e.target.value)}
+                  onInput={(e) => {
+                    setPassword(e.target.value);
+                    setConfirmPasswordMatch(password() === confirmPassword());
+                  }}
                   type={showPassword() ? "text" : "password"}
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -240,10 +242,9 @@ export default function Register() {
                 <input
                   id="confirm_password"
                   value={confirmPassword()}
-                  onInput={(e) => setConfirmPassword(e.target.value)}
-                  onBlur={() => {
+                  onInput={(e) => {
+                    setConfirmPassword(e.target.value);
                     setConfirmPasswordMatch(password() === confirmPassword());
-                    setAllowTogglePWMatch(true);
                   }}
                   type="password"
                   required
@@ -252,14 +253,18 @@ export default function Register() {
                 {() => {
                   if (
                     confirmPasswordMatch() &&
-                    confirmPassword().length !== 0
+                    confirmPassword().length !== 0 &&
+                    password().length !== 0
                   ) {
                     return (
                       <div className="text-center italic text-green-900">
                         Passwords match
                       </div>
                     );
-                  } else if (allowTogglePWMatch())
+                  } else if (
+                    confirmPassword().length !== 0 &&
+                    password().length !== 0
+                  )
                     return (
                       <div className="text-center italic text-red-900">
                         Passwords do not match
@@ -283,21 +288,24 @@ export default function Register() {
             By clicking <span className="italic">Register</span>, you agree to
             our&nbsp;
             <a
-              href="#"
+              href="https://example.com/terms"
+              target="_new"
               class="font-semibold leading-6 text-blue-950 hover:text-blue-700"
             >
               Terms
             </a>
             ,&nbsp;
             <a
-              href="#"
+              href="https://example.com/privacy-policy"
+              target="_new"
               class="font-semibold leading-6 text-blue-950 hover:text-blue-700"
             >
               Privacy Policy
             </a>
             &nbsp; and&nbsp;
             <a
-              href="#"
+              href="https://example.com/cookie-policy"
+              target="_new"
               class="font-semibold leading-6 text-blue-950 hover:text-blue-700"
             >
               Cookie Policy
