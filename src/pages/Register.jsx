@@ -57,8 +57,6 @@ export default function Register() {
       password: password(),
     };
 
-    setConfirmPasswordMatch(password() === confirmPassword());
-
     if (confirmPasswordMatch()) {
       console.log("Password match. Should send data to server");
       apiClient.post("hello", formData).catch((err) => {
@@ -158,6 +156,7 @@ export default function Register() {
                   id="mobileNumber"
                   value={mobileNumber()}
                   onInput={(e) => setMobileNumber(e.target.value)}
+                  maxlength="10"
                   type="tel"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -250,17 +249,25 @@ export default function Register() {
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
+                {() => {
+                  if (
+                    confirmPasswordMatch() &&
+                    confirmPassword().length !== 0
+                  ) {
+                    return (
+                      <div className="text-center italic text-green-900">
+                        Passwords match
+                      </div>
+                    );
+                  } else if (allowTogglePWMatch())
+                    return (
+                      <div className="text-center italic text-red-900">
+                        Passwords do not match
+                      </div>
+                    );
+                }}
               </div>
             </div>
-
-            {() => {
-              if (confirmPasswordMatch() && confirmPassword().length !== 0) {
-                return <div>Passwords match</div>;
-              } else if (
-                allowTogglePWMatch()
-              )
-                return <div>Passwords do not match</div>;
-            }}
 
             <div>
               <button
