@@ -7,18 +7,18 @@ import { createSignal } from "solid-js";
 //import styles from './App.module.css';
 
 function App() {
-  const [greet, setGreet] = createSignal(null);
+  //const [greet, setGreet] = createSignal(null);
 
-  apiClient.get("/greet").then((response) => {
-    setGreet(response.data);
-  });
+  //apiClient.get("/greet").then((response) => {
+  //  setGreet(response.data);
+  //});
 
-  apiClient.post("/hello", {
-    message: "Hello",
-    response: "Ok",
-  });
+  //apiClient.post("/hello", {
+  //  message: "Hello",
+  //  response: "Ok",
+  //});
 
-  return <h1>{greet()}</h1>;
+  return <Register></Register>;
 }
 
 export default App;

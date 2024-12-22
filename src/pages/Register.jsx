@@ -1,3 +1,4 @@
+import apiClient from "../apiClient";
 import king8 from "../assets/king8-logo.png";
 import { createSignal } from "solid-js";
 //import * as yup from "yup";
@@ -41,7 +42,9 @@ export default function Register() {
   const [mobileNumber, setMobileNumber] = createSignal("");
   const [password, setPassword] = createSignal("");
   const [confirmPassword, setConfirmPassword] = createSignal("");
-  const [confirmPasswordError, setConfirmPasswordError] = createSignal("");
+  const [confirmPasswordMatch, setConfirmPasswordMatch] = createSignal(false);
+  const [showPassword, setShowPassword] = createSignal(false);
+  const [allowTogglePWMatch, setAllowTogglePWMatch] = createSignal(false);
 
   const handleSubmit = async (e) => {
     console.log("Reached submit function");
@@ -54,63 +57,15 @@ export default function Register() {
       password: password(),
     };
 
-    const passwordValue = password();
-    const confirmPasswordValue = confirmPassword();
-    if (passwordValue !== confirmPasswordValue) {
-      setConfirmPasswordError("Passwords do not match");
-      toast.error(confirmPasswordError());
+    setConfirmPasswordMatch(password() === confirmPassword());
+
+    if (confirmPasswordMatch()) {
+      console.log("Password match. Should send data to server");
+      apiClient.post("hello", formData).catch((err) => {
+        console.warn("there is an error", err);
+      });
     } else {
-      setConfirmPasswordError("");
-    }
-
-    if (!confirmPasswordError()) {
-      console.log("Should reach if password match");
-      try {
-
-          apiClient.post("/hello", formData);
-//        await schema.validate(formData, { abortEarly: false });
-//
-//        const response = fetch("/submit-register", {
-//          method: "POST",
-//          headers: { "Content-Type": "application/json" },
-//          body: JSON.stringify(formData),
-//        }).then((response) => {
-//          if (response.ok) {
-//            console.log("Form data submitted successfully");
-//            console.log(formData);
-//            setFirstName("");
-//            setLastName("");
-//            setEmail("");
-//            setMobileNumber("");
-//            setPassword("");
-//            setConfirmPassword("");
-//          } else {
-//            console.error("Failed to submit form data");
-//            throw new Error("Failed to register account");
-//          }
-//        });
-//
-//        toast.promise(response, {
-//          loading: "Registering your account",
-//          success: "You're in! Verify account via your email now",
-//          error: "Error occurred while registering your account",
-//        });
-      } catch (err) {
-        if (err instanceof yup.ValidationError) {
-          const errorMessages = {};
-          err.inner.forEach((error) => {
-            errorMessages[error.path] = error.message;
-          });
-
-          console.log(mobileNumber());
-          for (const field in errorMessages) {
-            toast.error(`Input Error: ${errorMessages[field]}`);
-          }
-        } else {
-          console.error("An unexpected error occurred:", err);
-          toast.error("An unexpected error occurred. Please try again later.");
-        }
-      }
+      console.log("Password don't match!");
     }
   };
 
@@ -219,15 +174,57 @@ export default function Register() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password"
                   value={password()}
                   onInput={(e) => setPassword(e.target.value)}
-                  type="password"
+                  type={showPassword() ? "text" : "password"}
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword())}
+                  class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none"
+                >
+                  {showPassword() ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5c7 0 10 7 10 7s-3 7-10 7-10-7-10-7 3-7 10-7z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 9a3 3 0 100 6 3 3 0 000-6z"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.98 8.223C3.214 9.428 2 11 2 11s3 7 10 7c2.257 0 4.136-.748 5.6-1.873M9.053 9.29A3 3 0 1114.7 14.7M9.529 4.775A11.966 11.966 0 0112 4.5c7 0 10 7 10 7s-.794 1.852-2.353 3.54M3 3l18 18"
+                      />
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
 
@@ -245,12 +242,25 @@ export default function Register() {
                   id="confirm_password"
                   value={confirmPassword()}
                   onInput={(e) => setConfirmPassword(e.target.value)}
+                  onBlur={() => {
+                    setConfirmPasswordMatch(password() === confirmPassword());
+                    setAllowTogglePWMatch(true);
+                  }}
                   type="password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
+
+            {() => {
+              if (confirmPasswordMatch() && confirmPassword().length !== 0) {
+                return <div>Passwords match</div>;
+              } else if (
+                allowTogglePWMatch()
+              )
+                return <div>Passwords do not match</div>;
+            }}
 
             <div>
               <button
