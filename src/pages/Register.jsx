@@ -4,6 +4,7 @@ import { createSignal } from "solid-js";
 import * as yup from "yup";
 //import zxcvbn from "zxcvbn"; //for password strength checker
 
+//form validation variable
 const schema = yup.object().shape({
   first_name: yup
     .string()
@@ -27,11 +28,7 @@ const schema = yup.object().shape({
     .required("Email is required"),
   mobile_number: yup
     .string()
-    .nullable()
-    .notRequired()
-    .min(10, "Philippine Mobile Number should be 10 characters")
-    .max(10, "Philippine Mobile Number should be 10 characters")
-    .matches(/^9?[0-9]*$/, "Must be digits and should start with 9"),
+    .matches(/^$|^9\d{9}$/, "Must be digits that start with 9"),
   password: yup
     .string()
     .min(8, "Password needs to be at least 8 characters")
@@ -40,7 +37,6 @@ const schema = yup.object().shape({
 });
 
 export default function Register() {
-  console.log("Hello");
   const [firstName, setFirstName] = createSignal("");
   const [lastName, setLastName] = createSignal("");
   const [email, setEmail] = createSignal("");
@@ -51,9 +47,17 @@ export default function Register() {
   const [showPassword, setShowPassword] = createSignal(false);
   const [errors, setErrors] = createSignal({});
 
-  const handleSubmit = async (e) => {
-    console.log("Reached submit function");
+  //for submit operations
+  const handleSubmit = async(e) => {
     e.preventDefault();
+
+    try {
+      if (!confirmPasswordMatch()) throw Error("Passwords don't match!");
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+    //payload
     const formData = {
       first_name: firstName(),
       last_name: lastName(),
@@ -62,29 +66,28 @@ export default function Register() {
       password: password(),
     };
 
+    //validating payload contents
     schema
       .validate(formData, { abortEarly: false })
       .then(() => {
         setErrors({});
-        console.log("Form submitted successfully:", formValues());
+        console.info("Password match. Should send data to server");
+        apiClient.post("hello", formData).catch((err) => {
+          console.error("Server communication error: ", err);
+        });
       })
       .catch((err) => {
-        const newErrors = {};
-        //console.warn(err.inner);
-        err.inner.forEach((error) => {
-          newErrors[error.path] = error.message;
-        });
-        setErrors(newErrors);
+        if (err.inner) {
+          const newErrors = {};
+          console.error(err.inner);
+          err.inner.forEach((error) => {
+            newErrors[error.path] = error.message;
+          });
+          setErrors(newErrors);
+        } else {
+          console.error(err);
+        }
       });
-
-    if (confirmPasswordMatch()) {
-      console.log("Password match. Should send data to server");
-      apiClient.post("hello", formData).catch((err) => {
-        console.error("there is an error", err);
-      });
-    } else {
-      console.log("Password don't match!");
-    }
   };
 
   return (
