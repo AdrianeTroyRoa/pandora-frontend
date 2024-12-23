@@ -28,7 +28,7 @@ const schema = yup.object().shape({
     .required("Email is required"),
   mobile_number: yup
     .string()
-    .matches(/^$|^9\d{9}$/, "Must be digits that start with 9"),
+    .matches(/^$|^9\d{9}$/, "Should be 10 digits that start with 9"),
   password: yup
     .string()
     .min(8, "Password needs to be at least 8 characters")
@@ -48,7 +48,8 @@ export default function Register() {
   const [errors, setErrors] = createSignal({});
 
   //for submit operations
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
+    console.info("Clicked submit");
     e.preventDefault();
 
     try {
@@ -71,21 +72,22 @@ export default function Register() {
       .validate(formData, { abortEarly: false })
       .then(() => {
         setErrors({});
-        console.info("Password match. Should send data to server");
-        apiClient.post("hello", formData).catch((err) => {
-          console.error("Server communication error: ", err);
-        });
+      })
+      .then(() => {
+        //sending data to server
+        console.info("Sending data to server...")
+        return apiClient.post("hello", formData);
       })
       .catch((err) => {
         if (err.inner) {
           const newErrors = {};
-          console.error(err.inner);
           err.inner.forEach((error) => {
             newErrors[error.path] = error.message;
           });
           setErrors(newErrors);
+          console.error("Validation errors", newErrors);
         } else {
-          console.error(err);
+          console.error("Server communication error", err);
         }
       });
   };
@@ -196,6 +198,7 @@ export default function Register() {
                   onInput={(e) => setMobileNumber(e.target.value)}
                   maxlength="10"
                   type="tel"
+                  placeholder="Optional"
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
               </div>
