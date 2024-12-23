@@ -53,7 +53,7 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      if (!confirmPasswordMatch()) throw Error("Passwords don't match!");
+      if (!confirmPasswordMatch()) throw Error("Passwords don't match");
     } catch (err) {
       console.error(err);
       return;
@@ -77,6 +77,8 @@ export default function Register() {
         //sending data to server
         console.info("Sending data to server...")
         return apiClient.post("hello", formData);
+      }).then((response) => {
+        console.info("Server:", response.data)
       })
       .catch((err) => {
         if (err.inner) {
