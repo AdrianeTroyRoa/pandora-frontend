@@ -6,18 +6,16 @@ import * as yup from "yup";
 
 //form validation variable
 const schema = yup.object().shape({
-  first_name: yup
+  firstName: yup
     .string()
     .min(2, "First Name needs to be at least 2 characters")
     .max(50, "First Name only allows up to 50 characters")
-    .required("First Name is required")
-    .trim(),
-  last_name: yup
+    .required("First Name is required"),
+  lastName: yup
     .string()
     .min(2, "Last Name needs to be at least 2 characters")
     .max(50, "Last Name only allows up to 50 characters")
-    .required("Last Name is required")
-    .trim(),
+    .required("Last Name is required"),
   email: yup
     .string()
     .email("Invalid email")
@@ -60,8 +58,8 @@ export default function Register() {
     }
     //payload
     const formData = {
-      first_name: firstName(),
-      last_name: lastName(),
+      firstName: firstName(),
+      lastName: lastName(),
       email: email(),
       mobile_number: mobileNumber(),
       password: password(),
@@ -75,10 +73,11 @@ export default function Register() {
       })
       .then(() => {
         //sending data to server
-        console.info("Sending data to server...")
-        return apiClient.post("hello", formData);
-      }).then((response) => {
-        console.info("Server:", response.data)
+        console.info("Sending data to server...");
+        return apiClient.post("auth/create-user", formData);
+      })
+      .then((response) => {
+        console.info("Server:", response.data);
       })
       .catch((err) => {
         if (err.inner) {
@@ -125,7 +124,6 @@ export default function Register() {
                   type="text"
                   value={firstName()}
                   onInput={(e) => setFirstName(e.target.value)}
-                  required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
                 {errors().first_name && (
@@ -149,7 +147,6 @@ export default function Register() {
                   value={lastName()}
                   onInput={(e) => setLastName(e.target.value)}
                   type="text"
-                  required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
                 {errors().last_name && (
@@ -174,7 +171,6 @@ export default function Register() {
                   onInput={(e) => setEmail(e.target.value)}
                   type="email"
                   autocomplete="email"
-                  required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
                 {errors().email && (
@@ -229,7 +225,6 @@ export default function Register() {
                     setConfirmPasswordMatch(password() === confirmPassword());
                   }}
                   type={showPassword() ? "text" : "password"}
-                  required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
                 <button
@@ -300,7 +295,6 @@ export default function Register() {
                     setConfirmPasswordMatch(password() === confirmPassword());
                   }}
                   type="password"
-                  required
                   className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
                 {() => {
