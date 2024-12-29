@@ -124,7 +124,7 @@ function Inquiry() {
           subject: parms.subject,
           mobile_num: parms.phoneNum,
           email: parms.email,
-          msg: parms.message,
+          message: parms.message,
         };
         //sending data to server
         console.info("Sending data to server...");
@@ -133,6 +133,7 @@ function Inquiry() {
       })
       .then((response) => {
         console.info("Server:", response.data);
+        toast.success("Inquiry sent", { id: notifyLoading });
       })
       .catch((err) => {
         if (err.inner) {
