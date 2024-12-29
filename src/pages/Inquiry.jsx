@@ -2,6 +2,8 @@ import { createSignal, onMount } from "solid-js";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import * as yup from "yup";
+import apiClient from "../apiClient";
+import toast, { Toaster } from "solid-toast";
 //import LoggedInHeader from "../components/LoggedInHeader";
 
 function Inquiry() {
@@ -80,7 +82,7 @@ function Inquiry() {
         .required("You forgot inputting your name."),
       email: yup
         .string()
-        .email("This doesn't seem like an email. Typo?")
+        .email("This doesn't seem like an email")
         .matches(
           /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
           "This doesn't seem like an email",
@@ -88,7 +90,10 @@ function Inquiry() {
         .required("Psst. Your email?"),
       phoneNum: yup
         .string()
-        .matches(/^$|^9\d{9}$/, "This doesn't look like a valid number"),
+        .matches(
+          /^$|^9\d{9}$/,
+          "This doesn't look like a valid Philippine number",
+        ),
       subject: yup
         .string()
         .min(2, "Subject field should be at least 2 characters")
@@ -103,6 +108,9 @@ function Inquiry() {
       subject: subject(),
       message: message(),
     };
+
+    //loading toast animation
+    const notifyLoading = toast.loading("Sending inquiry...");
 
     schema
       .validate(parms, { abortEarly: false })
@@ -121,7 +129,7 @@ function Inquiry() {
         //sending data to server
         console.info("Sending data to server...");
         console.info(inquiryData);
-        //return apiClient.post("", inquiryData);
+        return apiClient.post("inquiry/add-inquiry", inquiryData);
       })
       .then((response) => {
         console.info("Server:", response.data);
@@ -134,12 +142,15 @@ function Inquiry() {
           });
           setErrors(newErrors);
           console.error("Validation errors", newErrors);
+        } else if (err.response.data) {
+          console.error(err.response);
+
+          //notify error via toast animation
+          toast.error(err.response.data.message, { id: notifyLoading });
         } else {
           console.error("Server communication error", err);
         }
       });
-
-    console.log("FUCK! IT WORKS!");
 
     //saving info to db proper
     //try {
@@ -238,7 +249,7 @@ function Inquiry() {
                   type="email"
                   id="email"
                   value={email()}
-                  onInput={(e) => setEmail(e.target.value)}
+                  onInput={(e) => setEmail(e.target.value.toLowerCase())}
                   className="w-full p-2.5 rounded-lg border shadow-sm focus:ring-primary-500 focus:border-primary-500"
                   placeholder="name@king8Plastics.com"
                   required
@@ -262,6 +273,7 @@ function Inquiry() {
                     type="tel"
                     id="phoneNum"
                     value={phoneNum()}
+                    maxlength="10"
                     onInput={(e) => setPhoneNum(e.target.value)}
                     className="w-full p-2.5 rounded-lg border shadow-sm focus:ring-primary-500 focus:border-primary-500"
                     placeholder="9XXXXXXXXX"
@@ -334,6 +346,7 @@ function Inquiry() {
         </div>
       </div>
       <Footer />
+      <Toaster />
     </div>
   );
 }
