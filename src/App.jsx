@@ -5,6 +5,7 @@ import Register from "./pages/Register.jsx";
 import apiClient from "./apiClient";
 import { createSignal } from "solid-js";
 import InquireNow from "./pages/Inquiry";
+import Products from "./pages/Products";
 //import styles from './App.module.css';
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
   //  response: "Ok",
   //});
 
-  return <InquireNow />;
+  return <Products />;
 }
 
 export default App;
