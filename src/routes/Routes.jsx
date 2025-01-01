@@ -13,6 +13,7 @@ function Routes() {
   return (
     <Router>
       <Route path="/" component={Splash} />
+      <Route path="/home" component={Splash} />
       <Route path="/inquire" component={InquireNow} />
       <Route path="/products" component={Products} />
       <AuthRoutes />
