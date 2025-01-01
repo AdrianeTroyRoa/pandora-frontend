@@ -1,12 +1,4 @@
-import logo from "./logo.svg";
-import Splash from "./pages/Splash.jsx";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import apiClient from "./apiClient";
-import { createSignal } from "solid-js";
-import InquireNow from "./pages/Inquiry";
-import Products from "./pages/Products";
-//import styles from './App.module.css';
+import Routes from "./routes/Routes";
 
 function App() {
   //const [greet, setGreet] = createSignal(null);
@@ -19,8 +11,7 @@ function App() {
   //  message: "Hello",
   //  response: "Ok",
   //});
-
-  return <Products />;
+  return <Routes />;
 }
 
 export default App;
