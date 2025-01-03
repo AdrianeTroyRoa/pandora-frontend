@@ -22,7 +22,7 @@ function Navbar() {
     };
   });
 
-  const menuItems = ["HOME", "PRODUCTS", "ABOUT US", "CONTACT US"];
+  const menuItems = ["HOME", "PRODUCTS", "CONTACT US"];
 
   return (
     <header>
@@ -59,7 +59,7 @@ function Navbar() {
             <ul class="flex flex-col mt-4 lg:flex-row lg:space-x-8 lg:mt-0">
               {menuItems.map((item, index) => (
                 <li key={index} class="relative group">
-                  <a href={"/" + item.toLowerCase()} class="block py-2 pr-4 pl-3 font-bold text-gray-700 border-b border-gray-100 hover:bg-blue-700 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">{item}</a>
+                  <a href={"/" + item.toLowerCase().replace(/ /g, '-')} class="block py-2 pr-4 pl-3 font-bold text-gray-700 border-b border-gray-100 hover:bg-blue-700 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0">{item}</a>
                 </li>
               ))}
             </ul>

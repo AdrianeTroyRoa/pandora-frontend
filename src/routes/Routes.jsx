@@ -14,7 +14,7 @@ function Routes() {
     <Router>
       <Route path="/" component={Splash} />
       <Route path="/home" component={Splash} />
-      <Route path="/inquire" component={InquireNow} />
+      <Route path="/contact-us" component={InquireNow} />
       <Route path="/products" component={Products} />
       <AuthRoutes />
     </Router>
