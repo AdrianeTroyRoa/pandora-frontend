@@ -3,7 +3,7 @@ import bg_vid from "../assets/quality.mp4";
 function Video() {
   return (
     <section
-      className="relative flex items-center justify-center h-screen overflow-hidden"
+      className="relative flex items-center justify-center min-h-screen mt-8 overflow-hidden"
       id="quality"
     >
       <video

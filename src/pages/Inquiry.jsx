@@ -202,9 +202,9 @@ function Inquiry() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-zinc-150">
       <Navbar />
-      <div className="flex-grow flex flex-col auto-mx justify-center items-center px-4 py-16 lg:py-16">
+      <div className="flex-grow flex h-screen flex-col justify-center items-center px-4 py-16 lg:py-16">
         <div className="w-full max-w-screen-md bg-white p-8 rounded-lg shadow-lg">
           <h2 className="text-4xl pt-5 font-extrabold text-center text-blue-900 mb-8">
             Inquire Now
