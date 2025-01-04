@@ -31,9 +31,7 @@ function Navbar() {
           <a href="/" class="flex items-center">
             <img src={king8} class="h-20" alt="Mindanao King8 Plastics Logo" />
           </a>
-          <div class="flex items-center lg:order-2 relative">
-            <a href="/sign-up" class="text-blue-950 bg-amber-400 hover:bg-amber-500 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2">SIGN UP</a>
-            <a href="/login" class="text-zinc-100 bg-blue-950 hover:bg-blue-700 font-bold border-solid border-2 border-blue-950 rounded-lg text-sm px-4 lg:px-6 py-2 lg:py-2.5 mr-2">LOG IN</a>
+          <div class="flex items-center">
             <div class="relative">
               <button id="dropdown-button" onClick={() => setIsDragdropOpen(!isDragdropOpen())} type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-blue-950 focus:outline-none focus:ring-2 focus:ring-gray-200">
                 <span class="sr-only">Open main menu</span>

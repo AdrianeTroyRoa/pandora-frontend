@@ -2,7 +2,7 @@ import { createSignal, onMount } from "solid-js";
 import apiClient from "../apiClient";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-//import header from "/products/5756d88f-03d2-43b0-872a-5fa79a008bad.b0af22da54ce948d42e286678c02fc87.webp"
+import header from "../assets/product-7.png";
 
 function Products() {
   const [products, setProducts] = createSignal([]);
@@ -31,7 +31,7 @@ function Products() {
         <div class="w-full h-24 font-normal top-40 text-center text-zinc-100 md:text-2xl sm:text-xl absolute  z-10">
           Check out our quality made products! Inquire now for more!
         </div>
-        {/*<img class="w-screen h-72 opacity-35 absolute" src={header} />*/}
+        <img class="w-screen h-72 opacity-35 absolute" src={header} />
       </div>
 
       <div class="w-full h-24 relative bg-blue-950">
@@ -124,10 +124,10 @@ function Products() {
           /* informs the client that there are no products yet */
           <div class="text-center h-[calc(100vh-30rem)] flex items-center justify-center flex-col">
             <div class="text-gray-500 font-bold text-2xl">
-              No products uploaded yet :(
+              No products found :(
             </div>
             <div class="text-gray-400">
-              Please come back later. Sorry for the inconvenience.
+              There seems to be a server problem. Please come back later.
             </div>
           </div>
         )}
