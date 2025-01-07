@@ -8,6 +8,7 @@ import { Router, Route } from "@solidjs/router";
 const Splash = lazy(() => import("../pages/Splash"));
 const InquireNow = lazy(() => import("../pages/Inquiry"));
 const Products = lazy(() => import("../pages/Products"));
+const IndividualProduct = lazy(() => import("../pages/IndividualProduct"));
 
 function Routes() {
   console.log("route function imported successfully");
@@ -17,6 +18,7 @@ function Routes() {
       <Route path="/home" component={Splash} />
       <Route path="/contact-us" component={InquireNow} />
       <Route path="/products" component={Products} />
+      <Route path="/individual-product" component={IndividualProduct} />
       {/*<AuthRoutes />*/}
     </Router>
   );
