@@ -16,15 +16,10 @@ function IndividualProduct() {
                   alt="Product Image"
                 />
               </div>
-              <div class="flex -mx-2 mb-4">
+              <div class="flex -mx-2 mb-4 justify-center items-center">
                 <div class="w-1/2 px-2">
                   <button class="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 ">
-                    Add to Cart
-                  </button>
-                </div>
-                <div class="w-1/2 px-2">
-                  <button class="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-full font-bold hover:bg-gray-300 ">
-                    Add to Wishlist
+                    Inquire about this Product
                   </button>
                 </div>
               </div>
@@ -37,10 +32,6 @@ function IndividualProduct() {
                 tincidunt.
               </p>
               <div class="flex mb-4">
-                <div class="mr-4">
-                  <span class="font-bold">Price:</span>
-                  <span class="">$29.99</span>
-                </div>
                 <div>
                   <span class="font-bold text-black-700 ">Availability:</span>
                   <span class="text-black-600 ">In Stock</span>
@@ -53,26 +44,6 @@ function IndividualProduct() {
                   <button class="w-6 h-6 rounded-full bg-red-500  mr-2"></button>
                   <button class="w-6 h-6 rounded-full bg-blue-500  mr-2"></button>
                   <button class="w-6 h-6 rounded-full bg-yellow-500  mr-2"></button>
-                </div>
-              </div>
-              <div class="mb-4">
-                <span class="font-bold text-black-700 ">Select Size:</span>
-                <div class="flex items-center mt-2">
-                  <button class="bg-gray-300 text-black-700 py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 ">
-                    S
-                  </button>
-                  <button class="bg-gray-300  text-black-700  py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 ">
-                    M
-                  </button>
-                  <button class="bg-gray-300  text-black-700  py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 ">
-                    L
-                  </button>
-                  <button class="bg-gray-300  text-black-700  py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 ">
-                    XL
-                  </button>
-                  <button class="bg-gray-300  text-black-700  py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 ">
-                    XXL
-                  </button>
                 </div>
               </div>
               <div>
