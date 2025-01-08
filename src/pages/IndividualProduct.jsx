@@ -1,7 +1,29 @@
+import { useParams } from "@solidjs/router";
+import { createSignal, onMount } from "solid-js";
+
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 function IndividualProduct() {
+  const { id } = useParams(); // Accessing the id parameter from the URL
+  const [product, setProduct] = createSignal({});
+  const [products, setProducts] = createSignal([]); // Assuming you have a list of products
+
+  onMount(async () => {
+    try {
+      // Fetching product data based on the extracted id
+      const response = await fetch(`/indiv-product/${id}`);
+      const data = await response.json();
+      setProduct(data);
+
+      // Fetching all products to determine previous and next IDs
+      const allProductsResponse = await fetch("/all-products");
+      const allProductsData = await allProductsResponse.json();
+      setProducts(allProductsData);
+    } catch (error) {
+      console.error("Error fetching products:", error.message);
+    }
+  });
   return (
     <>
       <Navbar />
