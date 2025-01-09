@@ -6,6 +6,9 @@ import apiClient from "../apiClient";
 import toast, { Toaster } from "solid-toast";
 //import LoggedInHeader from "../components/LoggedInHeader";
 
+
+import background from "../assets/product-7.png";
+
 function Inquiry() {
   const [name, setName] = createSignal("");
   const [email, setEmail] = createSignal("");
@@ -202,7 +205,7 @@ function Inquiry() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-150">
+    <div className="flex flex-col bg-black min-h-screen bg-cover bg-center bg-zinc-150" style={"background-image:url("+background+");"}>
       <Navbar />
       <div className="flex-grow flex h-screen flex-col justify-center items-center px-4 py-16 lg:py-16">
         <div className="w-full max-w-screen-md bg-white p-8 rounded-lg shadow-lg">
