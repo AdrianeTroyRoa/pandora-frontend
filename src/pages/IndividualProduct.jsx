@@ -9,14 +9,16 @@ function IndividualProduct() {
   const [product, setProduct] = createSignal({});
 
   onMount(async () => {
-    try {
-      // Fetching product data based on the extracted id
-      const response = await fetch(`/indiv-product/${id}`);
-      const data = await response.json();
-      setProduct(data);
-    } catch (error) {
-      console.error("Error fetching products:", error.message);
-    }
+    apiClient
+      .get(`product/${id}`)
+      .then((response) => {
+        const data = response.data;
+        setProduct(data);
+        console.log(product());
+      })
+      .catch((err) => {
+        console.error("Error fetching product:", err.message);
+      });
   });
   return (
     <>
