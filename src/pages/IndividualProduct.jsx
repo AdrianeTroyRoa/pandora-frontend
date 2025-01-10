@@ -1,11 +1,31 @@
-import { useParams } from "@solidjs/router";
-import { createSignal, onMount } from "solid-js";
+import { useNavigate, useParams } from "@solidjs/router";
+import { createEffect, createSignal, onMount } from "solid-js";
 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
+/**
+ * Checks if param is UUID format
+ * @param {string} uuid
+ * @returns {boolean}
+ */
+function checkIfUUID(uuid) {
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(uuid);
+}
+
 function IndividualProduct() {
-  const { id } = useParams(); // Accessing the id parameter from the URL
+
+  //something wrong here :)
+  createEffect(() => {
+    const { id } = useParams();
+    const idCheck = checkIfUUID(id);
+
+    console.log(idCheck);
+    if (!idCheck) useNavigate("/404", { replace: true });
+  });
+
   const [product, setProduct] = createSignal({});
 
   onMount(async () => {

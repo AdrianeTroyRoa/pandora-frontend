@@ -18,7 +18,7 @@ function Routes() {
       <Route path="/home" component={Splash} />
       <Route path="/contact-us" component={InquireNow} />
       <Route path="/products" component={Products} />
-      <Route path="/individual-product" component={IndividualProduct} />
+      <Route path="/product/:id" component={IndividualProduct} />
       {/*<AuthRoutes />*/}
     </Router>
   );
