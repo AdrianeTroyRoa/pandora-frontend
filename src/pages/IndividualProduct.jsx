@@ -51,11 +51,11 @@ function IndividualProduct() {
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-center items-center h-screen">
           <div class="flex flex-col md:flex-row -mx-4">
-            <div class="md:flex-1 px-4">
+            <div class="px-4">
               <div class="h-[460px] rounded-lg bg-gray-300 mb-4">
                 <img
                   class="w-full h-full object-cover"
-                  src={product().image_src}
+                  src={`/products/${product().image_src}`}
                   alt="Product Image"
                 />
               </div>
@@ -71,11 +71,6 @@ function IndividualProduct() {
               <h2 class="text-2xl font-bold mb-2">
                 {product().name ?? "Loading item name"}
               </h2>
-              <p class=" text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed
-                ante justo. Integer euismod libero id mauris malesuada
-                tincidunt.
-              </p>
               <div class="flex mb-4">
                 <div>
                   <span class="font-bold text-black-700 ">Items left: </span>
