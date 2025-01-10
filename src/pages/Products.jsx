@@ -78,20 +78,21 @@ function Products() {
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-xl:gap-4 gap-6 my-5">
             {products().map((product) => (
               <div class="mx-3 bg-white rounded p-4 cursor-pointer hover:-translate-y-1 transition-all relative">
-                <div class="mb-4 bg-gray-100 rounded p-2">
-                  <img
-                    src={`/products/${product.image_src}`}
-                    alt={product.name}
-                    class="aspect-[33/35] w-full object-contain"
-                  />
-                </div>
-
-                <div>
+                <a href={`product/${product.id}`}>
+                  <div class="mb-4 bg-gray-100 rounded p-2">
+                    <img
+                      src={`/products/${product.image_src}`}
+                      alt={product.name}
+                      class="aspect-[33/35] w-full object-contain"
+                    />
+                  </div>
                   <div class="flex gap-2">
                     <h5 class="text-base font-bold text-gray-800">
                       {product.name}
                     </h5>
                   </div>
+                </a>
+                <div>
                   <div class="flex items-center gap-2 mt-4">
                     <div
                       class="bg-pink-100 hover:bg-pink-200 w-12 h-9 flex items-center justify-center rounded cursor-pointer"
