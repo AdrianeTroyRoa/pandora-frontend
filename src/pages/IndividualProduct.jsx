@@ -55,7 +55,7 @@ function IndividualProduct() {
               <div class="h-[460px] rounded-lg bg-gray-300 mb-4">
                 <img
                   class="w-full h-full object-cover"
-                  src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                  src={product().image_src}
                   alt="Product Image"
                 />
               </div>
@@ -68,7 +68,9 @@ function IndividualProduct() {
               </div>
             </div>
             <div class="md:flex-1 px-4">
-              <h2 class="text-2xl font-bold mb-2">Product Name</h2>
+              <h2 class="text-2xl font-bold mb-2">
+                {product().name ?? "Loading item name"}
+              </h2>
               <p class=" text-sm mb-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed
                 ante justo. Integer euismod libero id mauris malesuada
@@ -76,8 +78,11 @@ function IndividualProduct() {
               </p>
               <div class="flex mb-4">
                 <div>
-                  <span class="font-bold text-black-700 ">Availability:</span>
-                  <span class="text-black-600 ">In Stock</span>
+                  <span class="font-bold text-black-700 ">Items left: </span>
+                  <span class="text-black-600 ">
+                    {product().num_left ??
+                      "Loading item quantity..."}
+                  </span>
                 </div>
               </div>
               <div class="mb-4">
@@ -94,14 +99,7 @@ function IndividualProduct() {
                   Product Description:
                 </span>
                 <p class="text-black-600 text-sm mt-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  sed ante justo. Integer euismod libero id mauris malesuada
-                  tincidunt. Vivamus commodo nulla ut lorem rhoncus aliquet.
-                  Duis dapibus augue vel ipsum pretium, et venenatis sem
-                  blandit. Quisque ut erat vitae nisi ultrices placerat non eget
-                  velit. Integer ornare mi sed ipsum lacinia, non sagittis
-                  mauris blandit. Morbi fermentum libero vel nisl suscipit, nec
-                  tincidunt mi consectetur.
+                  {product().description ?? "Loading description..."}
                 </p>
               </div>
             </div>
