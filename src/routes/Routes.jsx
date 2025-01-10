@@ -9,6 +9,7 @@ const Splash = lazy(() => import("../pages/Splash"));
 const InquireNow = lazy(() => import("../pages/Inquiry"));
 const Products = lazy(() => import("../pages/Products"));
 const IndividualProduct = lazy(() => import("../pages/IndividualProduct"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 
 function Routes() {
   console.log("route function imported successfully");
@@ -19,6 +20,7 @@ function Routes() {
       <Route path="/contact-us" component={InquireNow} />
       <Route path="/products" component={Products} />
       <Route path="/product/:id" component={IndividualProduct} />
+      <Route path="*paramName" component={NotFound} />
       {/*<AuthRoutes />*/}
     </Router>
   );

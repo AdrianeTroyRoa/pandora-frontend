@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "@solidjs/router";
 import { createEffect, createSignal, onMount } from "solid-js";
+import apiClient from "../apiClient";
 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -15,30 +16,34 @@ function checkIfUUID(uuid) {
   return uuidRegex.test(uuid);
 }
 
+/**
+ * Default function to return the component
+ * @returns {import("solid-js").JSXElement}
+ */
 function IndividualProduct() {
+  const params = useParams();
+  const navigate = useNavigate();
 
-  //something wrong here :)
-  createEffect(() => {
-    const { id } = useParams();
-    const idCheck = checkIfUUID(id);
-
-    console.log(idCheck);
-    if (!idCheck) useNavigate("/404", { replace: true });
-  });
-
+  const id = params.id;
   const [product, setProduct] = createSignal({});
 
   onMount(async () => {
-    apiClient
-      .get(`product/${id}`)
-      .then((response) => {
-        const data = response.data;
-        setProduct(data);
-        console.log(product());
-      })
-      .catch((err) => {
-        console.error("Error fetching product:", err.message);
-      });
+    const idCheck = checkIfUUID(id);
+
+    console.log(idCheck);
+    if (!idCheck) navigate("/404", { replace: true });
+    else {
+      apiClient
+        .get(`product/${id}`)
+        .then((response) => {
+          const data = response.data;
+          setProduct(data);
+          console.log(product());
+        })
+        .catch((err) => {
+          console.error("Error fetching product:", err.message);
+        });
+    }
   });
   return (
     <>
