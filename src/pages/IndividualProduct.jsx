@@ -55,7 +55,8 @@ function IndividualProduct() {
           <Navbar />
           <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-center items-center h-screen">
-              <div class="flex flex-col md:flex-row -mx-4">
+              {/*temp fix is md:mr-48 class*/}
+              <div class="flex flex-col md:flex-row md:mr-48 -mx-4">
                 <div class="px-4">
                   <div class="h-[460px] rounded-lg bg-gray-300 mb-4">
                     <img
@@ -110,7 +111,9 @@ function IndividualProduct() {
           <Footer />
         </div>
       ) : (
-        <div class="flex justify-center items-center h-screen w-full">Loading content...</div>
+        <div class="flex justify-center items-center h-screen w-full">
+          Loading content...
+        </div>
       )}
     </>
   );
