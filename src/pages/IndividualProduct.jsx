@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "@solidjs/router";
-import { createEffect, createSignal, onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import apiClient from "../apiClient";
 
 import Footer from "../components/Footer";
@@ -27,6 +27,18 @@ function IndividualProduct() {
   const id = params.id;
   const [product, setProduct] = createSignal({});
   const [isReady, setIsReady] = createSignal(false);
+
+  /**
+   * to navigate to inquiry page with initial message
+   * @param {string} message
+   */
+  function navigateToInquiry(message) {
+    navigate("/contact-us", {
+      state: {
+        message: message,
+      },
+    });
+  }
 
   onMount(async () => {
     const idCheck = checkIfUUID(id);
@@ -67,7 +79,12 @@ function IndividualProduct() {
                   </div>
                   <div class="flex -mx-2 mb-4 justify-center items-center">
                     <div class="w-1/2 px-2">
-                      <button class="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 ">
+                      <button
+                        onClick={() => navigateToInquiry(
+                          `I would like to inquire about your ${product().name} product. Can I ask about its price and the process of acquiring one or two?`,
+                        )}
+                        class="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 "
+                      >
                         Inquire about this Product
                       </button>
                     </div>
