@@ -3,9 +3,23 @@ import apiClient from "../apiClient";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import header from "../assets/product-7.png";
+import { useNavigate } from "@solidjs/router";
 
 function Products() {
   const [products, setProducts] = createSignal([]);
+  const navigate = useNavigate();
+
+  /**
+   * to navigate to inquiry page with initial message
+   * @param {string} message
+   */
+  function navigateToInquiry(message) {
+    navigate("/contact-us", {
+      state: {
+        message: message,
+      },
+    });
+  }
 
   onMount(() => {
     apiClient
@@ -113,6 +127,11 @@ function Products() {
                     <button
                       type="button"
                       class="text-sm px-2 h-9 font-semibold w-full bg-blue-900 hover:bg-blue-700 text-white tracking-wide ml-auto outline-none border-none rounded"
+                      onClick={() =>
+                        navigateToInquiry(
+                          `I would like to inquire about your "${product.name}" product. Can I ask about its price and the process of acquiring one or two?`,
+                        )
+                      }
                     >
                       Request Info
                     </button>

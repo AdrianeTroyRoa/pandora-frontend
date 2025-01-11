@@ -81,7 +81,7 @@ function IndividualProduct() {
                     <div class="w-1/2 px-2">
                       <button
                         onClick={() => navigateToInquiry(
-                          `I would like to inquire about your ${product().name} product. Can I ask about its price and the process of acquiring one or two?`,
+                          `I would like to inquire about your "${product().name}" product. Can I ask about its price and the process of acquiring one or two?`,
                         )}
                         class="w-full bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 "
                       >
